@@ -8,9 +8,9 @@ const userFetchService = {
     // bodyAdd : async function(user) {return {'method': 'POST', 'headers': this.head, 'body': user}},
     findAllUsers: () => fetch("/api/admin", {method: 'GET', headers: userFetchService.head,  }),
     findOneUser: (id) => fetch(`api/admin/user/${id}`),
-    addNewUser: (user) => fetch('api/users', {method: 'POST', headers: userFetchService.head, body: JSON.stringify(user)}),
-    updateUser: (user, id) => fetch(`api/users/${id}`, {method: 'PUT', headers: userFetchService.head, body: JSON.stringify(user)}),
-    deleteUser: (id) => fetch(`api/users/${id}`, {method: 'DELETE', headers: userFetchService.head})
+    addNewUser: (user) => fetch('api/admin', {method: 'POST', headers: userFetchService.head, body: JSON.stringify(user)}),
+    updateUser: (user, id) => fetch(`api/admin/${id}`, {method: 'PUT', headers: userFetchService.head, body: JSON.stringify(user)}),
+    deleteUser: (id) => fetch(`api/admin/${id}`, {method: 'DELETE', headers: userFetchService.head})
 }
 getTableWithUsers().then(_ => {
     getNewUserForm();
@@ -36,11 +36,11 @@ async function getTableWithUsers() {
                             <td>${user.roles.map(role=>role.role).join(',')}</td>
                             <td>
                                 <button type="button" data-userid="${user.id}" data-action="edit" class="btn btn-outline-secondary"
-                                data-toggle="modal" data-target="#userModal"></button>
+                                data-toggle="modal" data-target="#userModal">Edit</button>
                             </td>
                             <td>
                                 <button type="button" data-userid="${user.id}" data-action="delete" class="btn btn-outline-danger"
-                                data-toggle="modal" data-target="#userModal"></button>
+                                data-toggle="modal" data-target="#userModal">Delete</button>
                             </td>
                         </tr>
                 )`;
@@ -125,11 +125,17 @@ async function editUser(modal, id) {
     let bodyForm = `
         <form class="form-group" id="editUser">
             <label class="font-weight-bold" >ID</label>
-            <input type="text" class="form-control" name="id" value="${user.id}" disabled><br>
-            <input class="form-control" id="AddNewUserFirstname" type="text" placeholder="first name" name="firstname" value="${user.firstname}"><br>
-            <input class="form-control" id="AddNewUserLastname" type="text" placeholder="last name" name="lastname" value="${user.lastname}"><br>
-            <input class="form-control" id="AddNewUserAge" type="number" placeholder="age" value="${user.age}"><br>
-            <input class="form-control" id="AddNewUserEmail" type="text" placeholder="email" name="email"  value="${user.email}"><br>
+            <input type="text" class="form-control" id="editId" name="id" value="${user.id}" disabled><br>
+            <label class="font-weight-bold">First name</label>
+            <input class="form-control" id="editFirstname" type="text" placeholder="first name" name="firstname" value="${user.firstname}"><br>
+            <label class="font-weight-bold">Last name</label>
+            <input class="form-control" id="editLastname" type="text" placeholder="last name" name="lastname" value="${user.lastname}"><br>
+            <label class="font-weight-bold">Age</label>
+            <input class="form-control" id="editAge" type="number" placeholder="age" value="${user.age}"><br>
+            <label class="font-weight-bold">Email</label>
+            <input class="form-control" id="editEmail" type="text" placeholder="email" name="email"  value="${user.email}"><br>
+            <label class="font-weight-bold">Password</label>
+            <input class="form-control" id="editPassword" type="text" placeholder="password" name="password"  value="" required><br>
             
             <select  value="${user.roles}" multiple size="2" class="form-control"  id="editRoles" name="roles">
                      <option value="ROLE_USER" selected="${user.roles.includes('ROLE_USER')}"> USER </option>
@@ -140,15 +146,21 @@ async function editUser(modal, id) {
     modal.find('.modal-body').append(bodyForm);
 
     $("#editButton").on('click', async () => {
-        let id = modal.find("#id").val().trim();
-        let login = modal.find("#login").val().trim();
-        let password = modal.find("#password").val().trim();
-        let age = modal.find("#age").val().trim();
+        let id = modal.find("#editId").val().trim();
+        let firstname = modal.find("#editFirstname").val().trim();
+        let lastname = modal.find("#editLastname").val().trim();
+        let email = modal.find("#editEmail").val().trim();
+        let password = modal.find("#editPassword").val().trim();
+        let age = modal.find("#editAge").val().trim();
+        let roles = modal.find("#editRoles").val();
         let data = {
-            id: id,
-            login: login,
-            password: password,
-            age: age
+            id,
+            firstname,
+            lastname,
+            email,
+            password,
+            age,
+            roles
         }
         const response = await userFetchService.updateUser(data, id);
 
@@ -169,38 +181,88 @@ async function editUser(modal, id) {
 }
 
 
-// удаляем юзера из модалки удаления
+
+// удаляем юзера
 async function deleteUser(modal, id) {
-    await userFetchService.deleteUser(id);
-    getTableWithUsers();
-    modal.find('.modal-title').html('');
-    modal.find('.modal-body').html('User was deleted');
+    let preuser = await userFetchService.findOneUser(id);
+    let user = await preuser.json();
+
+    modal.find('.modal-title').html('Delete user');
+
+    let deleteButton = `<button  class="btn btn-outline-success" id="deleteButton">Delete</button>`;
     let closeButton = `<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>`
+    modal.find('.modal-footer').append(deleteButton);
     modal.find('.modal-footer').append(closeButton);
+
+    let bodyForm = `
+        <form class="form-group" id="deleteUser">
+            <label class="font-weight-bold" >ID</label>
+            <input type="text" class="form-control" id="deleteId" name="id" value="${user.id}" disabled><br>
+            <label class="font-weight-bold">First name</label>
+            <input class="form-control" id="deleteFirstname" type="text" name="firstname" value="${user.firstname}" readonly><br>
+            <label class="font-weight-bold">Last name</label>
+            <input class="form-control" id="deleteLastname" type="text" name="lastname" value="${user.lastname}" readonly><br>
+            <label class="font-weight-bold">Age</label>
+            <input class="form-control" id="deleteAge" type="number" value="${user.age}" readonly><br>
+                        
+            <select  value="${user.roles}" multiple size="2" class="form-control"  id="deleteRoles" name="roles" disabled>
+                     <option value="ROLE_USER" selected="${user.roles.includes('ROLE_USER')}"> USER </option>
+                     <option value="ROLE_ADMIN" selected="${user.roles.includes('ROLE_ADMIN')}"> ADMIN </option>
+            </select>
+        </form>
+    `
+    modal.find('.modal-body').append(bodyForm);
+    $("#deleteButton").on('click', async () => {
+        let id = modal.find("#deleteId").val().trim();
+        let firstname = modal.find("#deleteFirstname").val().trim();
+        let lastname = modal.find("#deleteLastname").val().trim();
+        let age = modal.find("#deleteAge").val().trim();
+        let roles = modal.find("#deleteRoles").val();
+        let data = {
+            id,
+            firstname,
+            lastname,
+            age,
+            roles
+        }
+
+
+    await userFetchService.deleteUser(data, id);
+    getTableWithUsers();
+
+    // modal.find('.modal-title').html('');
+    // modal.find('.modal-body').html('User was deleted');
+    // let closeButton = `<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>`
+    // modal.find('.modal-footer').append(closeButton);
+    })
 }
-
-
-
-
-
 
 async function addNewUser() {
     $('#addNewUserButton').click(async () =>  {
         let addUserForm = $('#defaultSomeForm')
-        let login = addUserForm.find('#AddNewUserLogin').val().trim();
-        let password = addUserForm.find('#AddNewUserPassword').val().trim();
-        let age = addUserForm.find('#AddNewUserAge').val().trim();
+        let firstname = addUserForm.find("#newFirstname").val().trim();
+        let lastname = addUserForm.find("#newLastname").val().trim();
+        let age = addUserForm.find("#newAge").val().trim();
+        let email = addUserForm.find("#newEmail").val().trim();
+        let password = addUserForm.find("#NewPassword").val().trim();
+        let roles = addUserForm.find("#roles").val();
         let data = {
-            login: login,
-            password: password,
-            age: age
+            firstname,
+            lastname,
+            email,
+            password,
+            age,
+            roles
         }
         const response = await userFetchService.addNewUser(data);
         if (response.ok) {
             getTableWithUsers();
-            addUserForm.find('#AddNewUserLogin').val('');
-            addUserForm.find('#AddNewUserPassword').val('');
-            addUserForm.find('#AddNewUserAge').val('');
+            addUserForm.find('#newFirstname').val('');
+            addUserForm.find('#newLastname').val('');
+            addUserForm.find('#newAge').val('');
+            addUserForm.find('#newEmail').val('');
+            addUserForm.find('#NewPassword').val('');
+            addUserForm.find('#roles').val('');
         } else {
             let body = await response.json();
             let alert = `<div class="alert alert-danger alert-dismissible fade show col-12" role="alert" id="sharaBaraMessageError">
@@ -213,3 +275,32 @@ async function addNewUser() {
         }
     })
 }
+
+async function navbarFilling() {
+    const response = await fetch("/api/admin/user")
+    return response.json();
+}
+navbarFilling().then((user) => {
+    let roles = [];
+    for (let i = 0; i < user.roles.length; i++) {
+        roles.push(user.roles[i].role);
+    }
+    let rolesList = roles.join(', ');
+
+    let navbar_html = `
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between">
+                    <span>
+                        <span class="navbar-brand font-weight-bold">${user.email}</span>
+                        <span class="navbar-brand font-weight-regular">with roles: ${rolesList}</span>
+
+                    </span>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <small><a class="nav-link" href="/logout">Logout</a></small>
+                        </li>
+                    </ul>
+                </nav>`;
+
+    // вставка в 'navbar-content'
+    $("#navbar-content").html(navbar_html);
+});

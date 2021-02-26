@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,11 @@ public class RestAdminController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
+    @GetMapping("/user")
+    public User getUser(@AuthenticationPrincipal User user) {
+        return user;
+    }
+
     @GetMapping(value = "/user/{id}")
     public ResponseEntity<User> read(@PathVariable(name = "id") Long id) {
         User user = userService.findUserById(id);

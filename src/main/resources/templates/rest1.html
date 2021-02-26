@@ -7,7 +7,7 @@
     <title>Index</title>
 </head>
 <body class="text-center">
-<h1>Index</h1>
+<!--<h1>Index</h1>-->
 
 <!--таблица юзеров-->
 <div class="container-fluid">
@@ -40,9 +40,22 @@
 
         <div class="form-group align-items-center">
             <form id="defaultSomeForm" data-hidden=true style="display: none">
-                <input class="form-control" id="AddNewUserLogin" type="text" placeholder="login"><br>
-                <input class="form-control" id="AddNewUserPassword" type="password" placeholder="password"><br>
-                <input class="form-control" id="AddNewUserAge" type="number" placeholder="age"><br>
+                <label class="font-weight-bold" for="newFirstname">First name</label>
+                <input class="form-control" id="newFirstname" type="text" placeholder="First name"><br>
+                <label class="font-weight-bold" for="newLastname">Last name</label>
+                <input class="form-control" id="newLastname" type="text" placeholder="Last name"><br>
+                <label class="font-weight-bold" for="newAge">Age</label>
+                <input class="form-control" id="newAge" type="number" placeholder="Age"><br>
+                <label class="font-weight-bold" for="newEmail">Email</label>
+                <input class="form-control" id="newEmail" placeholder="Email"><br>
+                <label class="font-weight-bold" for="NewPassword">Password</label>
+                <input class="form-control" id="NewPassword" type="password" placeholder="Password" required><br>
+                <label class="font-weight-bold" for="roles">Roles</label>
+                <select multiple="multiple" size="2" class="form-control"  id="roles"
+                        name="rolesNames" >
+                    <option value="ROLE_USER"> USER </option>
+                    <option value="ROLE_ADMIN"> ADMIN </option>
+                </select>
                 <button class="btn btn-primary mb-2" type="button" id="addNewUserButton">Add new user</button>
             </form>
             <div class="p-2">

@@ -71,21 +71,6 @@ async function getTableWithUsers() {
 }
 
 
-async function getNewUserForm() {
-    let button = $(`#new`);
-    let form = $(`#defaultSomeForm`)
-    button.on('click', () => {
-        if (form.attr("data-hidden") === "true") {
-            form.attr('data-hidden', 'false');
-            form.show();
-            button.text('Hide panel');
-        } else {
-            form.attr('data-hidden', 'true');
-            form.hide();
-            button.text('Show panel');
-        }
-    })
-}
 
 
 // что то деалем при открытии модалки и при закрытии
@@ -231,9 +216,13 @@ async function deleteUser(modal, id) {
     // modal.find('.modal-footer').append(closeButton);
     })
 }
+async function getNewUserForm() {
+    let button = $(`#AddUser`);
+    let form = $(`#defaultSomeForm`)
 
+}
 async function addNewUser() {
-    $('#addNewUserButton').click(async () =>  {
+    $('#AddUser').click(async () =>  {
         let addUserForm = $('#defaultSomeForm')
         let firstname = addUserForm.find("#newFirstname").val().trim();
         let lastname = addUserForm.find("#newLastname").val().trim();

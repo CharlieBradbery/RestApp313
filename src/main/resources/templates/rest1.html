@@ -63,8 +63,8 @@
             <!--сами вкладки (tabs) без содержимого конец-->
 
             <!--таблица юзеров-->
-            <div class="container-fluid">
-                <div class="tab-content" id="myTabContent">
+<!--            <div class="container-fluid">-->
+            <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="users">
                     <h5 class="d-flex ml-3 mt-1">All users</h5>
                         <table class="table table-striped" id="mainTableWithUsers" for="myTab">
@@ -82,40 +82,92 @@
                             </tbody>
                         </table>
                     </div>
+
+<!--            <div class="container-fluid">-->
+<!--                <div class="d-flex justify-content-center">-->
+                <div class="tab-pane fade" id="new" role="tabpanel" aria-labelledby="new-tab">
+                    <h5 class="d-flex ml-3 mt-1">Add new user</h5>
+                    <div class="container-fluid bg-white px-5 py-3 vh-100 text-center">
+<!--                    <div class="form-group align-items-center">-->
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-4">
+                            <form id="defaultSomeForm" >
+                                <div class="form-group">
+                                    <label class="font-weight-bold" for="newFirstname">First name</label>
+                                    <input class="form-control" id="newFirstname" type="text" placeholder="First name"><br>
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-weight-bold" for="newLastname">Last name</label>
+                                    <input class="form-control" id="newLastname" type="text" placeholder="Last name"><br>
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-weight-bold" for="newAge">Age</label>
+                                    <input class="form-control" id="newAge" type="number" placeholder="Age"><br>
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-weight-bold" for="newEmail">Email</label>
+                                    <input class="form-control" id="newEmail" placeholder="Email"><br>
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-weight-bold" for="NewPassword">Password</label>
+                                    <input class="form-control" id="NewPassword" type="password" placeholder="Password" required><br>
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-weight-bold" for="roles">Roles</label>
+                                    <select multiple="multiple" size="2" class="form-control"  id="roles"
+                                    name="rolesNames" >
+                                        <option value="ROLE_USER"> USER </option>
+                                        <option value="ROLE_ADMIN"> ADMIN </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-success" id="AddUser" value="Add new user">
+                                </div>
+                            </form>
+<!--                        <div class="p-2">-->
+<!--                            <button class="btn btn-outline-success" id="nnnew">Show panel</button>-->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-<!--форма заполнения нового юзера и две кнопки-->
-<div class="container-fluid">
-    <div class="d-flex justify-content-center">
-
-        <div class="form-group align-items-center">
-            <form id="defaultSomeForm" data-hidden=true style="display: none">
-                <label class="font-weight-bold" for="newFirstname">First name</label>
-                <input class="form-control" id="newFirstname" type="text" placeholder="First name"><br>
-                <label class="font-weight-bold" for="newLastname">Last name</label>
-                <input class="form-control" id="newLastname" type="text" placeholder="Last name"><br>
-                <label class="font-weight-bold" for="newAge">Age</label>
-                <input class="form-control" id="newAge" type="number" placeholder="Age"><br>
-                <label class="font-weight-bold" for="newEmail">Email</label>
-                <input class="form-control" id="newEmail" placeholder="Email"><br>
-                <label class="font-weight-bold" for="NewPassword">Password</label>
-                <input class="form-control" id="NewPassword" type="password" placeholder="Password" required><br>
-                <label class="font-weight-bold" for="roles">Roles</label>
-                <select multiple="multiple" size="2" class="form-control"  id="roles"
-                        name="rolesNames" >
-                    <option value="ROLE_USER"> USER </option>
-                    <option value="ROLE_ADMIN"> ADMIN </option>
-                </select>
-                <button class="btn btn-primary mb-2" type="button" id="addNewUserButton">Add new user</button>
-            </form>
-            <div class="p-2">
-                <button class="btn btn-outline-success" id="new">Show panel</button>
-            </div>
         </div>
-
     </div>
 </div>
+
+
+<!--форма заполнения нового юзера и две кнопки-->
+<!--<div class="container-fluid">-->
+<!--    <div class="d-flex justify-content-center">-->
+
+<!--        <div class="form-group align-items-center">-->
+<!--            <form id="defaultSomeForm" data-hidden=true style="display: none">-->
+<!--                <label class="font-weight-bold" for="newFirstname">First name</label>-->
+<!--                <input class="form-control" id="newFirstname" type="text" placeholder="First name"><br>-->
+<!--                <label class="font-weight-bold" for="newLastname">Last name</label>-->
+<!--                <input class="form-control" id="newLastname" type="text" placeholder="Last name"><br>-->
+<!--                <label class="font-weight-bold" for="newAge">Age</label>-->
+<!--                <input class="form-control" id="newAge" type="number" placeholder="Age"><br>-->
+<!--                <label class="font-weight-bold" for="newEmail">Email</label>-->
+<!--                <input class="form-control" id="newEmail" placeholder="Email"><br>-->
+<!--                <label class="font-weight-bold" for="NewPassword">Password</label>-->
+<!--                <input class="form-control" id="NewPassword" type="password" placeholder="Password" required><br>-->
+<!--                <label class="font-weight-bold" for="roles">Roles</label>-->
+<!--                <select multiple="multiple" size="2" class="form-control"  id="roles"-->
+<!--                        name="rolesNames" >-->
+<!--                    <option value="ROLE_USER"> USER </option>-->
+<!--                    <option value="ROLE_ADMIN"> ADMIN </option>-->
+<!--                </select>-->
+<!--                <button class="btn btn-primary mb-2" type="button" id="addNewUserButton">Add new user</button>-->
+<!--            </form>-->
+<!--            <div class="p-2">-->
+<!--                <button class="btn btn-outline-success" id="new">Show panel</button>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--    </div>-->
+<!--</div>-->
 
 <!--скрытое дефолтное модальное окно -->
 <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">

@@ -21,13 +21,12 @@ public class UserController {
         return "userdata";
     }
 
-//    @GetMapping("/user/{id}")
-//    public String UserdataAdmin(@PathVariable("id") Long id, Model model){
-//        model.addAttribute("user", userService.findUserById(id));
-//        return "userdata";
-//    }
-@GetMapping("/rest")
-public String getRest(){
-    return "rest1";
-}
+    @GetMapping("/rest")
+    public String getRest(){
+        return "rest1";
+    }
+    @GetMapping("/current")
+    public String getCurrentUser(){
+        return "rest2";
+    }
 }

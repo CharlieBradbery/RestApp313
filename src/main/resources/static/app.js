@@ -41,11 +41,11 @@ async function getTableWithUsers() {
                             <td>${user.email}</td>
                             <td>${user.roles.map(role=>role.role).join(',')}</td>
                             <td>
-                                <button type="button" data-userid="${user.id}" data-action="edit" class="btn btn-outline-secondary"
+                                <button type="button" data-userid="${user.id}" data-action="edit" class="btn btn-info edit-btn"
                                 data-toggle="modal" data-target="#userModal">Edit</button>
                             </td>
                             <td>
-                                <button type="button" data-userid="${user.id}" data-action="delete" class="btn btn-outline-danger"
+                                <button type="button" data-userid="${user.id}" data-action="delete" class="btn btn-danger"
                                 data-toggle="modal" data-target="#userModal">Delete</button>
                             </td>
                         </tr>
@@ -69,9 +69,6 @@ async function getTableWithUsers() {
         // editUser(defaultModal, buttonUserId);
     })
 }
-
-
-
 
 // что то деалем при открытии модалки и при закрытии
 // основываясь на ее дата атрибутах
@@ -209,11 +206,6 @@ async function deleteUser(modal, id) {
     await userFetchService.deleteUser(id);
     getTableWithUsers();
     modal.modal('hide');
-
-    // modal.find('.modal-title').html('');
-    // modal.find('.modal-body').html('User was deleted');
-    // let closeButton = `<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>`
-    // modal.find('.modal-footer').append(closeButton);
     })
 }
 async function getNewUserForm() {
@@ -259,4 +251,5 @@ async function addNewUser() {
         }
     })
 }
+
 

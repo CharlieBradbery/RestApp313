@@ -10,7 +10,7 @@
 <div class="navbar navbar-dark bg-dark shadow-sm">
     <div class="container d-flex justify-content-between" id="mainNavbar">
         <span>
-        <span class="navbar-brand font-weight-bold">Email</span>
+        <span class="navbar-brand font-weight-bold" id = "currentUserEmail">Email</span>
 
 
 <!--            <span class="navbar-brand font-weight-regular" th:text= "' with roles ' +-->
@@ -64,7 +64,7 @@
 
             <!--таблица юзеров-->
             <div class="container-fluid">
-
+                <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="users">
                     <h5 class="d-flex ml-3 mt-1">All users</h5>
                         <table class="table table-striped" id="mainTableWithUsers" for="myTab">

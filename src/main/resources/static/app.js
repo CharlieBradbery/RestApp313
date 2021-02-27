@@ -10,17 +10,23 @@ const userFetchService = {
     findOneUser: (id) => fetch(`api/admin/user/${id}`),
     addNewUser: (user) => fetch('api/admin', {method: 'POST', headers: userFetchService.head, body: JSON.stringify(user)}),
     updateUser: (user, id) => fetch(`api/admin/${id}`, {method: 'PUT', headers: userFetchService.head, body: JSON.stringify(user)}),
-    deleteUser: (id) => fetch(`api/admin/${id}`, {method: 'DELETE', headers: userFetchService.head})
+    deleteUser: (id) => fetch(`api/admin/${id}`, {method: 'DELETE', headers: userFetchService.head}),
+    getCurrentUser: () => fetch("/api/admin/user")
 }
 getTableWithUsers().then(_ => {
     getNewUserForm();
     getDefaultModal();
     addNewUser();
+
 })
 
 async function getTableWithUsers() {
     let table = $('#mainTableWithUsers tbody');
     table.empty();
+    let currentUser = await userFetchService.getCurrentUser().then(rest => rest.json());
+
+    $("#currentUserEmail").html(`${currentUser.email} with roles ${currentUser.roles.map(role=>role.role).join()}`)
+
 
     await userFetchService.findAllUsers()
         .then(res => res.json())
@@ -265,33 +271,3 @@ async function addNewUser() {
     })
 }
 
-async function navbarFilling() {
-    let navbar = $('#mainNavbar body');
-
-    const response = await fetch("/api/admin/user")
-    return response.json();
-}
-navbarFilling().then((user) => {
-    let roles = [];
-    for (let i = 0; i < user.roles.length; i++) {
-        roles.push(user.roles[i].role);
-    }
-    let rolesList = roles.join(', ');
-
-    let navbar_html = `
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between">
-                    <span>
-                        <span class="navbar-brand font-weight-bold">${user.email}</span>
-                        <span class="navbar-brand font-weight-regular">with roles: ${rolesList}</span>
-
-                    </span>
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <small><a class="nav-link" href="/logout">Logout</a></small>
-                        </li>
-                    </ul>
-                </nav>`;
-
-    // вставка в 'navbar-content'
-    $("#navbar-content").html(navbar_html);
-});

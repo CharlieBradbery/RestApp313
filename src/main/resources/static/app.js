@@ -66,7 +66,7 @@ async function getTableWithUsers() {
 
 
 async function getNewUserForm() {
-    let button = $(`#SliderNewUserForm`);
+    let button = $(`#new`);
     let form = $(`#defaultSomeForm`)
     button.on('click', () => {
         if (form.attr("data-hidden") === "true") {
@@ -213,22 +213,11 @@ async function deleteUser(modal, id) {
     `
     modal.find('.modal-body').append(bodyForm);
     $("#deleteButton").on('click', async () => {
-        let id = modal.find("#deleteId").val().trim();
-        let firstname = modal.find("#deleteFirstname").val().trim();
-        let lastname = modal.find("#deleteLastname").val().trim();
-        let age = modal.find("#deleteAge").val().trim();
-        let roles = modal.find("#deleteRoles").val();
-        let data = {
-            id,
-            firstname,
-            lastname,
-            age,
-            roles
-        }
 
 
-    await userFetchService.deleteUser(data, id);
+    await userFetchService.deleteUser(id);
     getTableWithUsers();
+    modal.modal('hide');
 
     // modal.find('.modal-title').html('');
     // modal.find('.modal-body').html('User was deleted');
@@ -277,6 +266,8 @@ async function addNewUser() {
 }
 
 async function navbarFilling() {
+    let navbar = $('#mainNavbar body');
+
     const response = await fetch("/api/admin/user")
     return response.json();
 }

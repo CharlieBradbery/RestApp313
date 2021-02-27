@@ -6,33 +6,84 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Index</title>
 </head>
-<body class="text-center">
-<!--<h1>Index</h1>-->
+<body>
+<div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container d-flex justify-content-between" id="mainNavbar">
+        <span>
+        <span class="navbar-brand font-weight-bold">Email</span>
 
-<!--таблица юзеров-->
-<div class="container-fluid">
 
-    <div class="d-flex justify-content-center">
-        <div>
-            <table class="table table-striped" id="mainTableWithUsers">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Age</th>
-                    <th>Email</th>
-                    <th>Roles</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+<!--            <span class="navbar-brand font-weight-regular" th:text= "' with roles ' +-->
+<!--                 ${#strings.listJoin(currentUser.roles, ', ')}" ></span>-->
+        </span>
+        </span>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <small><a class="nav-link" href="/logout">Logout</a></small>
+            </li>
+        </ul>
     </div>
 </div>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!--container for the_left_side_panel_(vertical_menu) start-->
+        <div class="col-sm-2">
+            <br>
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a href="/admin" class="nav-link active">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/user" class="nav-link">User</a>
+                </li>
+            </ul>
+        </div>
+        <!--container for the_left_side_panel_(vertical_menu) end-->
+
+
+        <div class="col-sm-10 bg-light px-5 vh-100">
+            <br>
+            <br>
+            <h1>Admin panel</h1>
+
+            <!--сами вкладки (tabs) без содержимого начало-->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="users-tab" data-toggle="tab" href="#users" role="tab"
+                       aria-controls="users" aria-selected="true">Users</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="new-tab" data-toggle="tab" href="#new" role="tab" aria-controls="new"
+                       aria-selected="false">New user</a>
+                </li>
+            </ul>
+            <!--сами вкладки (tabs) без содержимого конец-->
+
+            <!--таблица юзеров-->
+            <div class="container-fluid">
+
+                <div class="tab-pane fade show active" id="users">
+                    <h5 class="d-flex ml-3 mt-1">All users</h5>
+                        <table class="table table-striped" id="mainTableWithUsers" for="myTab">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Login</th>
+                                <th>Password</th>
+                                <th>Age</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
 <!--форма заполнения нового юзера и две кнопки-->
 <div class="container-fluid">
@@ -59,7 +110,7 @@
                 <button class="btn btn-primary mb-2" type="button" id="addNewUserButton">Add new user</button>
             </form>
             <div class="p-2">
-                <button class="btn btn-outline-success" id="SliderNewUserForm">Show panel</button>
+                <button class="btn btn-outline-success" id="new">Show panel</button>
             </div>
         </div>
 

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/last_admin")
 public class AdminController {
 
     @Autowired

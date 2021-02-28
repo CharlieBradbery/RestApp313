@@ -14,18 +14,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/user")
+    @GetMapping("/last_user")
     public String Userdata(Authentication authentication, Model model){
         User user = (User) authentication.getPrincipal();
         model.addAttribute("user", user);
         return "userdata";
     }
 
-    @GetMapping("/rest")
+    @GetMapping("/admin")
     public String getRest(){
         return "rest1";
     }
-    @GetMapping("/current")
+    @GetMapping("/user")
     public String getCurrentUser(){
         return "rest2";
     }

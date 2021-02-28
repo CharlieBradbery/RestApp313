@@ -117,8 +117,5 @@ public class RestAdminController {
         return dto;
     }
 
-//    @GetMapping("/rest")
-//    public String getRest(){
-//        return "rest1";
-//    }
+
 }

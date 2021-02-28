@@ -70,7 +70,7 @@ async function getTableWithUsers() {
     })
 }
 
-// что то деалем при открытии модалки и при закрытии
+// что то делаем при открытии модалки и при закрытии
 // основываясь на ее дата атрибутах
 async function getDefaultModal() {
     $('#userModal').modal({
@@ -230,25 +230,10 @@ async function addNewUser() {
             age,
             roles
         }
-        const response = await userFetchService.addNewUser(data);
-        if (response.ok) {
-            getTableWithUsers();
-            addUserForm.find('#newFirstname').val('');
-            addUserForm.find('#newLastname').val('');
-            addUserForm.find('#newAge').val('');
-            addUserForm.find('#newEmail').val('');
-            addUserForm.find('#NewPassword').val('');
-            addUserForm.find('#roles').val('');
-        } else {
-            let body = await response.json();
-            let alert = `<div class="alert alert-danger alert-dismissible fade show col-12" role="alert" id="sharaBaraMessageError">
-                            ${body.info}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>`;
-            addUserForm.prepend(alert)
-        }
+         userFetchService.addNewUser(data);
+         getTableWithUsers();
+
+
     })
 }
 

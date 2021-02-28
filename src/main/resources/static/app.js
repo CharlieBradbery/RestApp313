@@ -150,6 +150,12 @@ async function editUser(modal, id) {
             age,
             roles
         }
+        if(password === "") {
+            alert("Enter password")
+            return;
+        };
+
+
         const response = await userFetchService.updateUser(data, id);
 
         if (response.ok) {
